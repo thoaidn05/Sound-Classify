@@ -5,7 +5,7 @@ import numpy as np
 chunk = 1024
 sample_format = pyaudio.paInt16 
 chanels = 1
-smpl_rt = 44100
+smpl_rt = 16000
 seconds = 1
 pa = pyaudio.PyAudio() 
 
@@ -32,19 +32,20 @@ def record(filename):
 
 if __name__ == "__main__":
     isProcessed = False
-    count = 100
+    count = 51
     while True:
         try:
             stream.start_stream()
             data = stream.read(chunk)
             signal = np.frombuffer(data, dtype=np.int16)
             # print(np.max(signal))
-            threshold = 10000
+            threshold = 5000
             if np.max(signal) < threshold:
                 isProcessed = False
             if np.max(signal) >= threshold and not isProcessed:
                 isProcessed = True
-                record(f"dataset/clap/clap{count}.wav")
+                # record(f"dataset/knock/knock{count}.wav")
+                record(f"test.wav")
                 count+=1
 
         except KeyboardInterrupt:
